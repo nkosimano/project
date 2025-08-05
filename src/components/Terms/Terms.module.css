@@ -1,0 +1,152 @@
+/* ==========================================================================
+   TERMS PAGE - RuleRev
+   Terms of service page styling
+   ========================================================================== */
+
+.termsPage {
+  min-height: 100vh;
+  padding: var(--spacing-32) 0;
+  background: var(--gradient-oceanic-deep);
+  background-attachment: fixed;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--spacing-16);
+  max-width: var(--container-3xl);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.icon {
+  color: var(--color-accent-cyan);
+  margin-bottom: var(--spacing-6);
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  font: var(--typography-display-2);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+}
+
+.subtitle {
+  font: var(--typography-body-large);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-4);
+}
+
+.lastUpdated {
+  font: var(--typography-body-small);
+  color: var(--color-text-tertiary);
+  font-style: italic;
+}
+
+.content {
+  max-width: var(--container-4xl);
+  margin: 0 auto;
+}
+
+.termsCard {
+  animation: fadeInUp var(--duration-slow) var(--ease-out);
+}
+
+.termsBody {
+  padding: var(--spacing-10);
+}
+
+.section {
+  margin-bottom: var(--spacing-10);
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  font: var(--typography-heading-3);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+  padding-bottom: var(--spacing-2);
+  border-bottom: 2px solid var(--color-accent-cyan);
+  display: inline-block;
+}
+
+.text {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-4);
+}
+
+.text:last-child {
+  margin-bottom: 0;
+}
+
+.list {
+  margin: var(--spacing-4) 0;
+  padding-left: var(--spacing-6);
+  color: var(--color-text-secondary);
+}
+
+.list li {
+  font: var(--typography-body);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-2);
+}
+
+.contactInfo {
+  background: var(--gradient-glass-accent);
+  padding: var(--spacing-6);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: var(--spacing-4);
+}
+
+.contactInfo p {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-2);
+}
+
+.contactInfo p:last-child {
+  margin-bottom: 0;
+}
+
+.contactInfo strong {
+  color: var(--color-text-primary);
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  .termsPage {
+    padding: var(--spacing-20) 0;
+  }
+  
+  .termsBody {
+    padding: var(--spacing-6);
+  }
+  
+  .section {
+    margin-bottom: var(--spacing-8);
+  }
+}

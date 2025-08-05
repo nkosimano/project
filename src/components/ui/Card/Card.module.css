@@ -1,0 +1,143 @@
+/* ==========================================================================
+   CARD COMPONENT - Aetherial Waves
+   Glassmorphism card with sophisticated hover effects
+   ========================================================================== */
+
+.card {
+  position: relative;
+  background: var(--color-surface-glass);
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: var(--transition-slow);
+  box-shadow: var(--shadow-glass);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--color-surface-elevated);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gradient-bioluminescent);
+  opacity: 0;
+  transition: var(--transition-normal);
+}
+
+.card:hover::before {
+  opacity: var(--opacity-60);
+}
+
+/* ==========================================================================
+   CARD SECTIONS
+   ========================================================================== */
+
+.header {
+  padding: var(--spacing-6) var(--spacing-6) var(--spacing-4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.body {
+  padding: var(--spacing-6);
+}
+
+.footer {
+  padding: var(--spacing-4) var(--spacing-6) var(--spacing-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.title {
+  font: var(--typography-heading-3);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+.subtitle {
+  font: var(--typography-body);
+  color: var(--color-text-tertiary);
+}
+
+.content {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   CARD VARIANTS
+   ========================================================================== */
+
+.elevated {
+  background: var(--color-surface-elevated);
+  box-shadow: var(--shadow-xl);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.elevated:hover {
+  box-shadow: var(--shadow-2xl);
+}
+
+.interactive {
+  cursor: pointer;
+  user-select: none;
+}
+
+.interactive:active {
+  transform: translateY(-2px);
+}
+
+.highlighted {
+  border-color: var(--color-accent-electric);
+  box-shadow: var(--shadow-electric);
+}
+
+.highlighted::before {
+  opacity: var(--opacity-80);
+}
+
+/* ==========================================================================
+   CARD SIZES
+   ========================================================================== */
+
+.compact .header,
+.compact .body,
+.compact .footer {
+  padding: var(--spacing-4);
+}
+
+.spacious .header,
+.spacious .body,
+.spacious .footer {
+  padding: var(--spacing-8);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  .card {
+    border-radius: var(--radius-lg);
+  }
+  
+  .header,
+  .body,
+  .footer {
+    padding: var(--spacing-5);
+  }
+  
+  .compact .header,
+  .compact .body,
+  .compact .footer {
+    padding: var(--spacing-3);
+  }
+}

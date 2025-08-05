@@ -1,0 +1,70 @@
+/* ==========================================================================
+   HERO COMPONENT - RuleRev
+   Sophisticated hero section with oceanic aesthetics
+   ========================================================================== */
+
+.hero {
+  padding: var(--spacing-32) 0 var(--spacing-24);
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  text-align: center;
+  max-width: var(--container-4xl);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.headline {
+  font: var(--typography-display-1);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-6);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.subtitle {
+  font: var(--typography-body-large);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-10);
+  max-width: var(--container-2xl);
+  margin-left: auto;
+  margin-right: auto;
+  line-height: var(--line-height-relaxed);
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  .hero {
+    padding: var(--spacing-20) 0 var(--spacing-12);
+    text-align: center;
+  }
+  
+  .headline {
+    font-size: var(--font-size-3xl);
+    line-height: var(--line-height-tight);
+    margin-bottom: var(--spacing-5);
+  }
+  
+  .subtitle {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-6);
+    padding: 0 var(--spacing-4);
+  }
+  
+  .cta {
+    padding: 0 var(--spacing-4);
+  }
+}

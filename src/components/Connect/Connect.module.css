@@ -1,0 +1,249 @@
+/* ==========================================================================
+   CONNECT PAGE - RuleRev
+   Contact form and information page
+   ========================================================================== */
+
+.connectPage {
+  min-height: 100vh;
+  padding: var(--spacing-32) 0;
+  background: var(--gradient-oceanic-deep);
+  background-attachment: fixed;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--spacing-16);
+  max-width: var(--container-3xl);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  font: var(--typography-display-2);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+  background: var(--gradient-bioluminescent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font: var(--typography-body-large);
+  color: var(--color-text-secondary);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--spacing-12);
+  max-width: var(--container-6xl);
+  margin: 0 auto;
+}
+
+.contactInfo {
+  animation: fadeInUp var(--duration-slow) var(--ease-out);
+}
+
+.infoCard {
+  position: sticky;
+  top: var(--spacing-8);
+}
+
+.infoTitle {
+  font: var(--typography-heading-3);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-8);
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+.contactIcon {
+  color: var(--color-accent-cyan);
+  flex-shrink: 0;
+  margin-top: var(--spacing-1);
+}
+
+.contactLabel {
+  font: var(--typography-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-1);
+}
+
+.contactValue {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.contactForm {
+  animation: fadeInUp var(--duration-slow) var(--ease-out);
+  animation-delay: 200ms;
+  animation-fill-mode: both;
+}
+
+.formTitle {
+  font: var(--typography-heading-3);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-8);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.label {
+  font: var(--typography-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.input,
+.textarea {
+  padding: var(--spacing-4);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-glass);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  color: var(--color-text-primary);
+  font: var(--typography-body);
+  transition: var(--transition-normal);
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-accent-electric);
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.successMessage {
+  text-align: center;
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  padding: var(--spacing-16);
+  animation: fadeInUp var(--duration-slow) var(--ease-out);
+}
+
+.successIcon {
+  color: var(--color-success);
+  margin-bottom: var(--spacing-6);
+}
+
+.successTitle {
+  font: var(--typography-heading-1);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+}
+
+.successText {
+  font: var(--typography-body-large);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-8);
+}
+
+.errorMessage {
+  margin-top: var(--spacing-4);
+  padding: var(--spacing-4);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.errorMessage p {
+  color: #fca5a5;
+  font: var(--typography-body-small);
+  margin: 0;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 1023px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+  }
+  
+  .infoCard {
+    position: static;
+  }
+}
+
+@media (max-width: 767px) {
+  .connectPage {
+    padding: var(--spacing-16) 0;
+  }
+  
+  .header {
+    padding: 0 var(--spacing-4);
+    margin-bottom: var(--spacing-12);
+  }
+  
+  .content {
+    gap: var(--spacing-6);
+    padding: 0 var(--spacing-4);
+  }
+  
+  .contactItem {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: var(--spacing-3);
+  }
+  
+  .contactIcon {
+    margin-top: 0;
+  }
+  
+  .form {
+    gap: var(--spacing-5);
+  }
+  
+  .input,
+  .textarea {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}

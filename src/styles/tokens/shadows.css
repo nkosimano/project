@@ -1,0 +1,33 @@
+/* ==========================================================================
+   SHADOW TOKENS - Aetherial Waves Design System
+   Sophisticated shadow system for depth and layering
+   ========================================================================== */
+
+:root {
+  /* Elevation Shadows */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* Colored Shadows - Bioluminescent Effects */
+  --shadow-primary: 0 4px 14px 0 rgba(44, 62, 80, 0.15);
+  --shadow-accent: 0 4px 14px 0 rgba(0, 245, 255, 0.15);
+  --shadow-electric: 0 4px 14px 0 rgba(30, 144, 255, 0.2);
+  --shadow-glow: 0 0 20px rgba(0, 245, 255, 0.3), 0 0 40px rgba(30, 144, 255, 0.2);
+
+  /* Interactive Shadows */
+  --shadow-hover: 0 12px 20px -8px rgba(0, 0, 0, 0.15), 0 0 25px rgba(0, 245, 255, 0.1);
+  --shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.4), var(--shadow-md);
+  --shadow-active: 0 2px 4px -1px rgba(0, 0, 0, 0.15), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+
+  /* Glassmorphism Shadows */
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --shadow-glass-intense: 0 8px 32px 0 rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  
+  /* Inner Shadows */
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  --shadow-inner-lg: inset 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}

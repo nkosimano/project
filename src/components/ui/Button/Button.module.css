@@ -1,0 +1,189 @@
+/* ==========================================================================
+   BUTTON COMPONENT - Aetherial Waves
+   Sophisticated button with glassmorphism and bioluminescent effects
+   ========================================================================== */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-6);
+  border: none;
+  border-radius: var(--radius-lg);
+  font: var(--typography-body);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+.button:disabled {
+  opacity: var(--opacity-50);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   BUTTON VARIANTS
+   ========================================================================== */
+
+/* Primary Button */
+.primary {
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-primary);
+}
+
+.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-active);
+}
+
+/* Glass Button */
+.glass {
+  background: var(--color-surface-glass);
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-glass);
+}
+
+.glass:hover {
+  background: var(--color-surface-elevated);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-glass-intense);
+}
+
+/* Accent Button */
+.accent {
+  background: var(--gradient-bioluminescent);
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-accent);
+}
+
+.accent:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-electric);
+}
+
+/* Ghost Button */
+.ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-neutral-600);
+}
+
+.ghost:hover {
+  background: var(--color-surface-glass);
+  color: var(--color-text-primary);
+  border-color: var(--color-accent-electric);
+}
+
+/* ==========================================================================
+   BUTTON SIZES
+   ========================================================================== */
+
+.small {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-md);
+}
+
+.large {
+  padding: var(--spacing-4) var(--spacing-8);
+  font-size: var(--font-size-lg);
+  border-radius: var(--radius-xl);
+}
+
+.icon {
+  padding: var(--spacing-3);
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+}
+
+.icon.small {
+  padding: var(--spacing-2);
+}
+
+.icon.large {
+  padding: var(--spacing-4);
+}
+
+/* ==========================================================================
+   BUTTON STATES & EFFECTS
+   ========================================================================== */
+
+/* Ripple Effect */
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-bioluminescent-subtle);
+  opacity: 0;
+  transition: var(--transition-fast);
+  border-radius: inherit;
+}
+
+.button:active::before {
+  opacity: var(--opacity-20);
+}
+
+/* Loading State */
+.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: var(--radius-full);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Full Width */
+.fullWidth {
+  width: 100%;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  .button {
+    padding: var(--spacing-3) var(--spacing-5);
+  }
+  
+  .large {
+    padding: var(--spacing-4) var(--spacing-6);
+    font-size: var(--font-size-base);
+  }
+}

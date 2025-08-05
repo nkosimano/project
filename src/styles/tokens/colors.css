@@ -1,0 +1,61 @@
+/* ==========================================================================
+   COLOR TOKENS - Aetherial Waves Design System
+   Inspired by oceanic twilight and bioluminescence
+   ========================================================================== */
+
+:root {
+  /* Primary Brand Colors - Oceanic Twilight */
+  --color-primary-dark: #2c3e50;
+  --color-primary-light: #1a5276;
+  --color-primary-50: #f0f4f7;
+  --color-primary-100: #d6e3ea;
+  --color-primary-200: #adc7d4;
+  --color-primary-300: #84abbd;
+  --color-primary-400: #5b8fa7;
+  --color-primary-500: #327390;
+  --color-primary-600: #2c5f7a;
+  --color-primary-700: #254b63;
+  --color-primary-800: #1e374d;
+  --color-primary-900: #182336;
+
+  /* Bioluminescent Accents */
+  --color-accent-cyan: #00f5ff;
+  --color-accent-electric: #1e90ff;
+  --color-accent-teal: #20b2aa;
+  --color-accent-aqua: #00bcd4;
+
+  /* Neutral Palette - Sophisticated Grays */
+  --color-neutral-50: #fafbfc;
+  --color-neutral-100: #f4f6f8;
+  --color-neutral-200: #e8ecef;
+  --color-neutral-300: #d1d9e0;
+  --color-neutral-400: #9aa5b1;
+  --color-neutral-500: #697586;
+  --color-neutral-600: #4b5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1f2937;
+  --color-neutral-900: #111827;
+
+  /* Semantic Colors */
+  --color-success: #10b981;
+  --color-success-light: #d1fae5;
+  --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
+  --color-error: #ef4444;
+  --color-error-light: #fecaca;
+  --color-info: var(--color-accent-electric);
+  --color-info-light: #dbeafe;
+
+  /* Surface Colors */
+  --color-background-primary: #0f172a;
+  --color-background-secondary: #1e293b;
+  --color-background-tertiary: #334155;
+  --color-surface-glass: rgba(255, 255, 255, 0.05);
+  --color-surface-elevated: rgba(255, 255, 255, 0.08);
+  
+  /* Text Colors */
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #94a3b8;
+  --color-text-inverse: #1e293b;
+}

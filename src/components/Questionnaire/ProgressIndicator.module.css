@@ -1,0 +1,167 @@
+/* ==========================================================================
+   PROGRESS INDICATOR COMPONENT - RuleRev
+   Visual progress tracking with interactive step indicators
+   ========================================================================== */
+
+.progressContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-8);
+  padding: var(--spacing-6);
+  background: var(--color-surface-glass);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.progressBar {
+  width: 100%;
+  max-width: 600px;
+  height: 8px;
+  background: var(--color-surface-glass);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--gradient-bioluminescent);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-slow) var(--ease-oceanic);
+  position: relative;
+}
+
+.progressFill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 30px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.progressText {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.currentStep {
+  font: var(--typography-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.percentage {
+  font: var(--typography-body-small);
+  color: var(--color-text-tertiary);
+  background: var(--gradient-glass-accent);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-full);
+}
+
+.stepIndicators {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stepIndicator {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-neutral-600);
+  background: transparent;
+  color: var(--color-text-tertiary);
+  font: var(--typography-body-small);
+  font-weight: var(--font-weight-semibold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-normal);
+  cursor: default;
+}
+
+.stepIndicator.clickable {
+  cursor: pointer;
+}
+
+.stepIndicator.clickable:hover {
+  border-color: var(--color-accent-electric);
+  color: var(--color-text-secondary);
+  transform: scale(1.1);
+}
+
+.stepIndicator.completed {
+  background: var(--gradient-bioluminescent);
+  border-color: var(--color-accent-cyan);
+  color: var(--color-text-inverse);
+}
+
+.stepIndicator.active {
+  background: var(--gradient-primary);
+  border-color: var(--color-accent-electric);
+  color: var(--color-text-primary);
+  transform: scale(1.2);
+  box-shadow: var(--shadow-electric);
+}
+
+.moreIndicator {
+  font: var(--typography-caption);
+  color: var(--color-text-tertiary);
+  margin-left: var(--spacing-2);
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  .progressContainer {
+    padding: var(--spacing-4);
+  }
+  
+  .progressText {
+    flex-direction: column;
+    gap: var(--spacing-2);
+    text-align: center;
+  }
+  
+  .stepIndicator {
+    width: 32px;
+    height: 32px;
+    font-size: var(--font-size-xs);
+  }
+  
+  .stepIndicators {
+    gap: var(--spacing-1);
+  }
+}

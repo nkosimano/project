@@ -1,0 +1,287 @@
+/* ==========================================================================
+   QUESTION RENDERER COMPONENT - RuleRev
+   Individual question display with various input types
+   ========================================================================== */
+
+.questionCard {
+  animation: fadeInUp var(--duration-slow) var(--ease-out);
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.questionBody {
+  padding: var(--spacing-10);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.questionHeader {
+  margin-bottom: var(--spacing-8);
+}
+
+.categoryTag {
+  display: inline-block;
+  background: var(--gradient-bioluminescent);
+  color: var(--color-text-inverse);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-full);
+  font: var(--typography-caption);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-4);
+}
+
+.questionTitle {
+  font: var(--typography-heading-2);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-3);
+  line-height: var(--line-height-snug);
+}
+
+.required {
+  color: var(--color-accent-cyan);
+  margin-left: var(--spacing-1);
+}
+
+.questionDescription {
+  font: var(--typography-body);
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: var(--line-height-relaxed);
+}
+
+.questionContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   CHOICE INPUTS
+   ========================================================================== */
+
+.choiceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.choiceButton {
+  padding: var(--spacing-4) var(--spacing-6);
+  text-align: left;
+  justify-content: flex-start;
+  min-height: 60px;
+  transition: var(--transition-normal);
+  border: 2px solid transparent;
+}
+
+.choiceButton:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 245, 255, 0.3);
+}
+
+/* ==========================================================================
+   SCALE INPUT
+   ========================================================================== */
+
+.scaleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-6);
+  padding: var(--spacing-8);
+}
+
+.scaleLabels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 400px;
+}
+
+.scaleLabel {
+  font: var(--typography-body-small);
+  color: var(--color-text-tertiary);
+  font-weight: var(--font-weight-medium);
+}
+
+.scaleSlider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+  width: 100%;
+  max-width: 400px;
+}
+
+.slider {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-glass);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-bioluminescent);
+  cursor: pointer;
+  box-shadow: var(--shadow-electric);
+}
+
+.slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-bioluminescent);
+  cursor: pointer;
+  border: none;
+  box-shadow: var(--shadow-electric);
+}
+
+.scaleValue {
+  font: var(--typography-heading-3);
+  color: var(--color-accent-cyan);
+  font-weight: var(--font-weight-bold);
+  background: var(--gradient-glass-accent);
+  padding: var(--spacing-3) var(--spacing-6);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+/* ==========================================================================
+   TEXT INPUTS
+   ========================================================================== */
+
+.textInput,
+.textarea {
+  width: 100%;
+  padding: var(--spacing-4);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-glass);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  color: var(--color-text-primary);
+  font: var(--typography-body);
+  transition: var(--transition-normal);
+}
+
+.textInput:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-accent-electric);
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
+}
+
+.textInput::placeholder,
+.textarea::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: var(--line-height-relaxed);
+}
+
+/* ==========================================================================
+   CONTACT FORM
+   ========================================================================== */
+
+.contactForm {
+  width: 100%;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-6);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.label {
+  font: var(--typography-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  .questionBody {
+    padding: var(--spacing-5);
+  }
+  
+  .choiceGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+  
+  .choiceButton {
+    min-height: 56px; /* Better touch target */
+    padding: var(--spacing-4) var(--spacing-5);
+    font-size: var(--font-size-base);
+  }
+  
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-5);
+  }
+  
+  .scaleContainer {
+    padding: var(--spacing-5);
+  }
+  
+  .textInput,
+  .textarea {
+    font-size: 16px; /* Prevent zoom on iOS */
+    padding: var(--spacing-4) var(--spacing-5);
+  }
+  
+  .slider {
+    height: 12px; /* Larger touch target */
+  }
+  
+  .slider::-webkit-slider-thumb {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+  }
+}

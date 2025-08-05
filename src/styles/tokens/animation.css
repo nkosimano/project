@@ -1,0 +1,69 @@
+/* ==========================================================================
+   ANIMATION TOKENS - Aetherial Waves Design System
+   Smooth, sophisticated animations respecting accessibility
+   ========================================================================== */
+
+:root {
+  /* Animation Durations */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+  --duration-slower: 500ms;
+  --duration-slowest: 750ms;
+
+  /* Easing Functions */
+  --ease-linear: cubic-bezier(0, 0, 1, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Custom Aetherial Easings */
+  --ease-oceanic: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-wave: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-ripple: cubic-bezier(0.4, 0, 0.6, 1);
+
+  /* Transition Compositions */
+  --transition-fast: all var(--duration-fast) var(--ease-out);
+  --transition-normal: all var(--duration-normal) var(--ease-out);
+  --transition-slow: all var(--duration-slow) var(--ease-oceanic);
+  --transition-colors: color var(--duration-fast) var(--ease-out), 
+                       background-color var(--duration-fast) var(--ease-out),
+                       border-color var(--duration-fast) var(--ease-out);
+  --transition-transform: transform var(--duration-normal) var(--ease-wave);
+  --transition-opacity: opacity var(--duration-normal) var(--ease-out);
+  --transition-shadow: box-shadow var(--duration-normal) var(--ease-out);
+
+  /* Animation Delays */
+  --delay-0: 0ms;
+  --delay-75: 75ms;
+  --delay-100: 100ms;
+  --delay-150: 150ms;
+  --delay-200: 200ms;
+  --delay-300: 300ms;
+  --delay-500: 500ms;
+  --delay-700: 700ms;
+  --delay-1000: 1000ms;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --duration-slower: 0ms;
+    --duration-slowest: 0ms;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
