@@ -91,16 +91,6 @@ export const questions: Question[] = [
     ]
   },
   {
-    id: 'ux-priority',
-    type: 'scale',
-    category: 'Design',
-    title: 'How important is a cutting‑edge UX?',
-    required: true,
-    min: 1,
-    max: 10,
-    scaleLabels: { min: 'Simple is fine', max: 'Must be cutting‑edge' }
-  },
-  {
     id: 'contact-info',
     type: 'contact',
     category: 'Contact Information',
