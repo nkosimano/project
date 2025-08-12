@@ -1,6 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// Load environment from server/env.local if present
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, 'env.local') });
 
 const app = express();
 const port = process.env.PORT || 3001;
