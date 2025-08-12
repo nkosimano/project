@@ -59,3 +59,17 @@
   --color-text-tertiary: #94a3b8;
   --color-text-inverse: #1e293b;
 }
+
+/* Progressive enhancement with modern color functions */
+@supports (color: oklch(60% 0.2 260)) {
+  :root {
+    /* Use perceptually uniform color space */
+    --color-accent-electric: oklch(65% 0.22 255);
+    --color-accent-cyan: oklch(88% 0.14 210);
+    --color-success: oklch(70% 0.18 150);
+    --color-error: oklch(62% 0.25 30);
+
+    /* Derived hover color via mixing */
+    --color-accent-electric-hover: color-mix(in oklch, var(--color-accent-electric) 85%, white);
+  }
+}
