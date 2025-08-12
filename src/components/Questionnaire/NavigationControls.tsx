@@ -12,6 +12,7 @@ interface NavigationControlsProps {
   onPrevious: () => void;
   onNext: () => void;
   onSubmit: () => void;
+  hideNext?: boolean;
 }
 
 export const NavigationControls: React.FC<NavigationControlsProps> = ({
@@ -22,7 +23,8 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
   isComplete,
   onPrevious,
   onNext,
-  onSubmit
+  onSubmit,
+  hideNext
 }) => {
   const isFirstQuestion = currentIndex === 0;
   const isLastQuestion = currentIndex === totalQuestions - 1;
@@ -63,14 +65,16 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
               {isSubmitting ? 'Submitting...' : 'Submit Discovery'}
             </Button>
           ) : (
-            <Button
-              variant={canProceed ? 'accent' : 'ghost'}
-              rightIcon={<ChevronRight size={20} />}
-              onClick={onNext}
-              disabled={!canProceed}
-            >
-              Next Question
-            </Button>
+            !hideNext && (
+              <Button
+                variant={canProceed ? 'accent' : 'ghost'}
+                rightIcon={<ChevronRight size={20} />}
+                onClick={onNext}
+                disabled={!canProceed}
+              >
+                Next Question
+              </Button>
+            )
           )}
         </div>
       </div>

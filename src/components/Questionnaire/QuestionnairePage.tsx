@@ -59,6 +59,7 @@ export const QuestionnairePage: React.FC = () => {
             onPrevious={questionnaire.previousQuestion}
             onNext={questionnaire.nextQuestion}
             onSubmit={questionnaire.submitQuestionnaire}
+            hideNext={true}
           />
         </div>
 

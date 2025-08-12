@@ -24,34 +24,6 @@ export const useQuestionnaire = () => {
   const totalQuestions = questions.length;
   const progress = ((state.currentQuestionIndex + 1) / totalQuestions) * 100;
 
-  const updateResponse = useCallback((questionId: string, answer: string | string[] | number) => {
-    setState(prev => {
-      const existingIndex = prev.responses.findIndex(r => r.questionId === questionId);
-      const newResponse: QuestionnaireResponse = {
-        questionId,
-        answer,
-        timestamp: new Date()
-      };
-
-      let updatedResponses;
-      if (existingIndex >= 0) {
-        updatedResponses = [...prev.responses];
-        updatedResponses[existingIndex] = newResponse;
-      } else {
-        updatedResponses = [...prev.responses, newResponse];
-      }
-
-      return {
-        ...prev,
-        responses: updatedResponses
-      };
-    });
-  }, []);
-
-  const updateContactInfo = useCallback((info: Partial<ContactInfo>) => {
-    setContactInfo(prev => ({ ...prev, ...info }));
-  }, []);
-
   const nextQuestion = useCallback(() => {
     setState(prev => {
       const nextIndex = prev.currentQuestionIndex + 1;
@@ -76,6 +48,43 @@ export const useQuestionnaire = () => {
       currentQuestionIndex: Math.max(0, Math.min(index, totalQuestions - 1))
     }));
   }, [totalQuestions]);
+
+  const updateResponse = useCallback((questionId: string, answer: string | string[] | number) => {
+    setState(prev => {
+      const existingIndex = prev.responses.findIndex(r => r.questionId === questionId);
+      const newResponse: QuestionnaireResponse = {
+        questionId,
+        answer,
+        timestamp: new Date()
+      };
+
+      let updatedResponses;
+      if (existingIndex >= 0) {
+        updatedResponses = [...prev.responses];
+        updatedResponses[existingIndex] = newResponse;
+      } else {
+        updatedResponses = [...prev.responses, newResponse];
+      }
+
+      return {
+        ...prev,
+        responses: updatedResponses
+      };
+    });
+
+    // Auto-advance heuristic: single-choice click and scale change advance immediately.
+    const q = questions.find(q => q.id === questionId);
+    if (q) {
+      if (q.type === 'single-choice' || q.type === 'scale') {
+        // Advance shortly after state update to let UI reflect selection
+        setTimeout(() => nextQuestion(), 120);
+      }
+    }
+  }, [nextQuestion]);
+
+  const updateContactInfo = useCallback((info: Partial<ContactInfo>) => {
+    setContactInfo(prev => ({ ...prev, ...info }));
+  }, []);
 
   const getCurrentResponse = useCallback((questionId: string) => {
     return state.responses.find(r => r.questionId === questionId)?.answer;
