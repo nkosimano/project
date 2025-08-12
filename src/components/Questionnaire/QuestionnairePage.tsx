@@ -24,6 +24,7 @@ export const QuestionnairePage: React.FC = () => {
   }
 
   const canProceed = questionnaire.isCurrentQuestionAnswered();
+  const isMultiChoice = currentQuestion.type === 'multiple-choice';
 
   return (
     <div className={styles.discoveryPage}>
@@ -62,7 +63,7 @@ export const QuestionnairePage: React.FC = () => {
             onPrevious={questionnaire.previousQuestion}
             onNext={questionnaire.nextQuestion}
             onSubmit={questionnaire.submitQuestionnaire}
-            hideNext={true}
+            hideNext={!isMultiChoice}
           />
         </div>
 
