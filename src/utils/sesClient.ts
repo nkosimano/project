@@ -63,47 +63,16 @@ export const sendContactEmail = async (data: EmailData): Promise<boolean> => {
  */
 export const sendDiscoveryEmail = async (data: DiscoveryEmailData): Promise<boolean> => {
   try {
-    const textContent = `
-RuleRev - New Discovery Submission
-
-Contact Information:
-Name: ${data.contactInfo.name}
-Email: ${data.contactInfo.email}
-Company: ${data.contactInfo.company}
-Phone: ${data.contactInfo.phone || 'Not provided'}
-
-Discovery responses have been submitted. Please see the HTML version for detailed formatting.
-
-Submitted: ${new Date().toLocaleString()}
-    `;
-
-    const command = new SendEmailCommand({
-      Source: import.meta.env.VITE_SES_FROM_EMAIL || 'noreply@rulerev.com',
-      Destination: {
-        ToAddresses: [import.meta.env.VITE_SES_TO_EMAIL || 'hello@rulerev.com'],
-      },
-      Message: {
-        Subject: {
-          Data: `New Discovery Submission from ${data.contactInfo.name} - ${data.contactInfo.company}`,
-          Charset: 'UTF-8',
-        },
-        Body: {
-          Html: {
-            Data: data.emailContent,
-            Charset: 'UTF-8',
-          },
-          Text: {
-            Data: textContent,
-            Charset: 'UTF-8',
-          },
-        },
-      },
+    const response = await fetch('/api/discovery', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     });
-
-    await sesClient.send(command);
-    return true;
+    if (!response.ok) return false;
+    const json = await response.json();
+    return Boolean(json?.ok);
   } catch (error) {
-    console.error('Error sending discovery email:', error);
+    console.error('Error sending discovery email via API:', error);
     return false;
   }
 };
