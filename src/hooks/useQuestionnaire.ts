@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { QuestionnaireState, QuestionnaireResponse, ContactInfo } from '../types/questionnaire';
+import { QuestionnaireState, QuestionnaireResponse, ContactInfo, QuestionOption } from '../types/questionnaire';
 import { questions } from '../data/questionnaireData';
 import { sendDiscoveryEmail } from '../utils/sesClient';
 
@@ -85,7 +85,7 @@ export const useQuestionnaire = () => {
     if (!currentQuestion) return false;
     
     if (currentQuestion.type === 'contact') {
-      return contactInfo.name && contactInfo.email && contactInfo.company;
+      return Boolean(contactInfo.name && contactInfo.email && contactInfo.company);
     }
     
     const response = getCurrentResponse(currentQuestion.id);
@@ -311,13 +311,13 @@ export const useQuestionnaire = () => {
         } else if (question.type === 'multiple-choice') {
           const answers = response.answer as string[];
           answerHtml = `<div class="multiple-choice">`;
-          answers.forEach(answer => {
-            const option = question.options?.find(opt => opt.value === answer);
+           answers.forEach(answer => {
+            const option = question.options?.find((opt: QuestionOption) => opt.value === answer);
             answerHtml += `<span class="choice-tag">${option?.text || answer}</span>`;
           });
           answerHtml += `</div>`;
         } else if (question.type === 'single-choice') {
-          const option = question.options?.find(opt => opt.value === response.answer);
+          const option = question.options?.find((opt: QuestionOption) => opt.value === response.answer);
           answerHtml = `<div class="question-answer">${option?.text || response.answer}</div>`;
         } else {
           answerHtml = `<div class="question-answer">${String(response.answer).replace(/\n/g, '<br>')}</div>`;

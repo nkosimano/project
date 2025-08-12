@@ -1,12 +1,12 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { LoadingSpinner } from './components/ui';
 import { WebGLBackground } from './components/WebGLBackground/WebGLBackground';
 import { Header } from './components/Header/Header';
 import { Hero } from './components/Hero/Hero';
-import { Solutions } from './components/Solutions/Solutions';
 import { CallToAction } from './components/CallToAction/CallToAction';
 import { Footer } from './components/Footer/Footer';
 import './styles/global.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Lazy load page components with better error handling
 const QuestionnairePage = lazy(() => 
@@ -44,88 +44,90 @@ const PageLoader = () => (
   />
 );
 
-function App() {
-  // Simple routing based on pathname
-  const isDiscoveryPage = window.location.pathname === '/discovery';
-  const isConnectPage = window.location.pathname === '/connect';
-  const isPrivacyPage = window.location.pathname === '/privacy';
-  const isTermsPage = window.location.pathname === '/terms';
-  const isProjectsPage = window.location.pathname === '/projects';
-
-  if (isDiscoveryPage) {
-    return (
-      <div className="min-h-screen" style={{ paddingTop: '80px' }}>
-        <WebGLBackground />
-        <Header />
-        <Suspense fallback={<PageLoader />}>
-          <QuestionnairePage />
-        </Suspense>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (isConnectPage) {
-    return (
-      <div className="min-h-screen" style={{ paddingTop: '80px' }}>
-        <WebGLBackground />
-        <Header />
-        <Suspense fallback={<PageLoader />}>
-          <Connect />
-        </Suspense>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (isPrivacyPage) {
-    return (
-      <div className="min-h-screen" style={{ paddingTop: '80px' }}>
-        <WebGLBackground />
-        <Header />
-        <Suspense fallback={<PageLoader />}>
-          <Privacy />
-        </Suspense>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (isTermsPage) {
-    return (
-      <div className="min-h-screen" style={{ paddingTop: '80px' }}>
-        <WebGLBackground />
-        <Header />
-        <Suspense fallback={<PageLoader />}>
-          <Terms />
-        </Suspense>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (isProjectsPage) {
-    return (
-      <div className="min-h-screen" style={{ paddingTop: '80px' }}>
-        <WebGLBackground />
-        <Header />
-        <Suspense fallback={<PageLoader />}>
-          <Projects />
-        </Suspense>
-        <Footer />
-      </div>
-    );
-  }
-
+function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen" style={{ paddingTop: '80px' }}>
       <WebGLBackground />
       <Header />
-      <Hero />
-      <Solutions />
-      <CallToAction />
+      <Suspense fallback={<PageLoader />}>{children}</Suspense>
       <Footer />
     </div>
+  );
+}
+
+function App() {
+  // Prefetch all lazy pages after initial render to make navigation instant
+  useEffect(() => {
+    const prefetch = () => {
+      // Trigger dynamic imports to warm the module cache
+      import('./components/Questionnaire/QuestionnairePage');
+      import('./components/Connect/Connect');
+      import('./components/Privacy/Privacy');
+      import('./components/Terms/Terms');
+      import('./components/Projects/Projects');
+    };
+
+    if (typeof (window as any).requestIdleCallback === 'function') {
+      (window as any).requestIdleCallback(prefetch);
+    } else {
+      setTimeout(prefetch, 500);
+    }
+  }, []);
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <RootLayout>
+              <Hero />
+              <CallToAction />
+            </RootLayout>
+          }
+        />
+        <Route
+          path="/discovery"
+          element={
+            <RootLayout>
+              <QuestionnairePage />
+            </RootLayout>
+          }
+        />
+        <Route
+          path="/connect"
+          element={
+            <RootLayout>
+              <Connect />
+            </RootLayout>
+          }
+        />
+        <Route
+          path="/privacy"
+          element={
+            <RootLayout>
+              <Privacy />
+            </RootLayout>
+          }
+        />
+        <Route
+          path="/terms"
+          element={
+            <RootLayout>
+              <Terms />
+            </RootLayout>
+          }
+        />
+        <Route
+          path="/projects"
+          element={
+            <RootLayout>
+              <Projects />
+            </RootLayout>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

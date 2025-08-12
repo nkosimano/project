@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardBody, Button } from '../ui';
 import { ExternalLink, Github, Eye } from 'lucide-react';
 import { ProjectModal, Project } from './ProjectModal';
 import styles from './Projects.module.css';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Array of project data with all projects included
 const projects: Project[] = [
@@ -146,6 +148,30 @@ const projects: Project[] = [
 
 export const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const pageRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    if (!pageRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray(`.${styles.projectCard}`);
+      gsap.set(cards, { opacity: 0, y: 24 });
+      gsap.to(cards, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: pageRef.current,
+          start: 'top 70%',
+        },
+      });
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
@@ -158,7 +184,7 @@ export const Projects: React.FC = () => {
   };
 
   return (
-    <div className={styles.projectsPage}>
+    <div className={styles.projectsPage} ref={pageRef}>
       <div className="container">
         <div className={styles.header}>
           <h1 className={styles.title}>Featured Projects</h1>

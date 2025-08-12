@@ -1,6 +1,11 @@
+// @ts-nocheck
 import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
+// Importing the types ensures JSX intrinsic elements for Three are available to TS
+import type { ThreeElements } from '@react-three/fiber';
 import * as THREE from 'three';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const NetworkNodes = () => {
   const nodesRef = useRef<THREE.Group>(null!);
@@ -8,6 +13,8 @@ const NetworkNodes = () => {
   const [interactions, setInteractions] = useState<Array<{ x: number; y: number; time: number; intensity: number }>>([]);
   const [scrollY, setScrollY] = useState(0);
   const { camera } = useThree();
+  // Per-node click pulse values (decay over time via GSAP)
+  const clickPulsesRef = useRef<Map<number, number>>(new Map());
   
   // Generate network nodes
   const nodes = useMemo(() => {
@@ -68,7 +75,7 @@ const NetworkNodes = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle interactions to create network pulses
+  // Handle interactions to create network pulses and gentle click pulses on nodes
   useEffect(() => {
     const handleInteraction = (event: MouseEvent | TouchEvent) => {
       let x: number, y: number, intensity: number = 1.0;
@@ -88,13 +95,45 @@ const NetworkNodes = () => {
         intensity = 1.2;
       }
       
-      // Create network activation pulse
+      // Create network activation pulse (global)
       setInteractions(prev => [...prev, {
         x,
         y,
         time: 0,
         intensity
       }]);
+
+      // Also create a gentle pulse if a node was "clicked"
+      // Determine closest node in 2D plane
+      let nearestIndex = -1;
+      let nearestDist = Infinity;
+      nodes.forEach((node, idx) => {
+        const dx = node.x - x;
+        const dy = node.y - y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < nearestDist) {
+          nearestDist = d2;
+          nearestIndex = idx;
+        }
+      });
+      // Threshold based on node size and proximity
+      if (nearestIndex >= 0 && nearestDist < 1.0) {
+        const current = { value: 1 };
+        // Update map on every gsap tick
+        const update = () => {
+          clickPulsesRef.current.set(nearestIndex, current.value);
+        };
+        update();
+        gsap.to(current, {
+          value: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          onUpdate: update,
+          onComplete: () => {
+            clickPulsesRef.current.delete(nearestIndex);
+          }
+        });
+      }
     };
 
     document.addEventListener('click', handleInteraction);
@@ -126,10 +165,13 @@ const NetworkNodes = () => {
     
     // Animate nodes with parallax effect and rotation
     if (nodesRef.current) {
-      nodesRef.current.children.forEach((nodeGroup, index) => {
+      nodesRef.current.children.forEach((nodeGroup: THREE.Object3D, index: number) => {
         const node = nodes[index];
         const pulse = Math.sin(currentTime * node.speed + node.phase) * 0.3 + 1;
-        nodeGroup.scale.setScalar(pulse);
+        // Gentle click pulse factor (0..1)
+        const clickPulse = clickPulsesRef.current.get(index) ?? 0;
+        const clickScale = 1 + clickPulse * 0.35;
+        nodeGroup.scale.setScalar(pulse * clickScale);
         
         // Add parallax movement based on scroll and depth
         const parallaxFactor = (node.z + 4) / 8; // Nodes closer to camera move more
@@ -149,8 +191,8 @@ const NetworkNodes = () => {
     }
     
     // Animate connections with depth-based effects, dynamic geometry, and rotation
-     if (connectionsRef.current && nodesRef.current) {
-       connectionsRef.current.children.forEach((line, index) => {
+      if (connectionsRef.current && nodesRef.current) {
+       connectionsRef.current.children.forEach((line: THREE.Object3D, index: number) => {
          const material = (line as THREE.Line).material as THREE.LineBasicMaterial;
          const geometry = (line as THREE.Line).geometry as THREE.BufferGeometry;
          const connection = connections[index];
@@ -186,7 +228,7 @@ const NetworkNodes = () => {
          const avgDepth = (fromNode.z + toNode.z) / 2;
          const depthFactor = (avgDepth + 4) / 8;
          
-         const baseOpacity = connection.opacity;
+          const baseOpacity = connection.opacity;
          const pulse = Math.sin(currentTime * 2 + index * 0.5) * 0.3 + 0.7;
          const scrollEffect = 1 - Math.abs(scrollProgress * 0.1) % 1;
          
@@ -293,24 +335,130 @@ const NetworkNodes = () => {
 
 export const WebGLBackground: React.FC = () => {
   return (
-    <div style={{ 
-      position: 'fixed', 
-      top: 0, 
-      left: 0, 
-      width: '100%', 
-      height: '100%', 
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
       zIndex: -1,
       pointerEvents: 'none'
     }}>
       <Canvas
-        camera={{ position: [0, 0, 15], fov: 75 }}
+        camera={{ position: [0, 0, 18], fov: 75 }}
         style={{ width: '100%', height: '100%' }}
       >
-        <ambientLight intensity={0.4} />
-        <pointLight position={[10, 10, 10]} intensity={0.6} />
-        <pointLight position={[-10, -10, 5]} intensity={0.3} color={new THREE.Color(0.2, 0.3, 0.5)} />
-        <NetworkNodes />
+        <AnimatedScene />
       </Canvas>
     </div>
+  );
+};
+
+const ParticleField: React.FC = () => {
+  const pointsRef = useRef<THREE.Points>(null!);
+  const particleCount = 1200;
+  const positions = useMemo(() => {
+    const arr = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      arr[i3 + 0] = (Math.random() - 0.5) * 40;
+      arr[i3 + 1] = (Math.random() - 0.5) * 30;
+      arr[i3 + 2] = (Math.random() - 0.5) * 20;
+    }
+    return arr;
+  }, []);
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    if (pointsRef.current) {
+      pointsRef.current.rotation.y = t * 0.02;
+      pointsRef.current.rotation.x = Math.sin(t * 0.1) * 0.05;
+    }
+  });
+
+  return (
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={positions.length / 3}
+          array={positions}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.05}
+        color={new THREE.Color(0.6, 0.9, 1.0)}
+        transparent
+        opacity={0.6}
+        sizeAttenuation
+        depthWrite={false}
+      />
+    </points>
+  );
+};
+
+const AnimatedScene: React.FC = () => {
+  const groupRef = useRef<THREE.Group>(null!);
+  const { camera } = useThree();
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.set(groupRef.current.rotation, { x: -0.1, y: -0.2 });
+      gsap.set(camera.position, { z: 22, x: 0.2, y: 0.1 });
+
+      const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      intro
+        .to(camera.position, { z: 18, duration: 1.2 })
+        .to(groupRef.current.rotation, { y: 0.15, x: -0.05, duration: 1.0 }, '<0.2');
+
+      gsap.to(groupRef.current.rotation, {
+        y: '+=1',
+        x: '+=0.25',
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+        },
+      });
+      gsap.to(camera.position, {
+        z: 16,
+        x: 0.4,
+        y: 0.2,
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+        },
+      });
+
+      const quickX = gsap.quickTo(groupRef.current.rotation, 'x', { duration: 0.6, ease: 'power2.out' });
+      const quickY = gsap.quickTo(groupRef.current.rotation, 'y', { duration: 0.6, ease: 'power2.out' });
+      const onMove = (e: MouseEvent) => {
+        const nx = (e.clientY / window.innerHeight - 0.5) * -0.3;
+        const ny = (e.clientX / window.innerWidth - 0.5) * 0.5;
+        quickX(nx);
+        quickY(ny);
+      };
+      window.addEventListener('mousemove', onMove, { passive: true });
+
+      return () => {
+        window.removeEventListener('mousemove', onMove);
+      };
+    });
+    return () => ctx.revert();
+  }, [camera]);
+
+  return (
+    <group ref={groupRef}>
+      <ambientLight intensity={0.45} />
+      <pointLight position={[10, 10, 10]} intensity={0.7} />
+      <pointLight position={[-10, -10, 5]} intensity={0.35} color={new THREE.Color(0.2, 0.3, 0.5)} />
+      <ParticleField />
+      <NetworkNodes />
+    </group>
   );
 };

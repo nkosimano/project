@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui';
 import { MessageCircle } from 'lucide-react';
 import styles from './CallToAction.module.css';
 
 export const CallToAction: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <section className={styles.section}>
       <div className="container">
@@ -16,9 +18,9 @@ export const CallToAction: React.FC = () => {
             <Button 
               variant="accent" 
               size="large" 
-              onClick={() => window.location.href = '/discovery'}
+              onClick={() => navigate('/connect')}
             >
-              Begin Your Project
+              Contact us
             </Button>
           </div>
         </div>

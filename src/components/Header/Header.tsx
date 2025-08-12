@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '../ui';
 import { Menu, X } from 'lucide-react';
 import styles from './Header.module.css';
+import gsap from 'gsap';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Preload page components on hover for instant navigation
 const preloadPage = (path: string) => {
@@ -26,15 +28,27 @@ const preloadPage = (path: string) => {
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!headerRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.set([`.${styles.logo}`, `.${styles.nav} a`], { opacity: 0, y: -12 });
+      gsap.to(`.${styles.logo}`, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' });
+      gsap.to(`.${styles.nav} a`, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08, delay: 0.1 });
+    }, headerRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} ref={headerRef}>
       <div className="container">
         <div className={styles.content}>
           <div className={styles.brand}>
             <button 
               className={styles.logoButton}
-              onClick={() => window.location.href = '/'}
+              onClick={() => navigate('/')}
               aria-label="Go to homepage"
             >
               <h1 className={styles.logo}>RuleRev</h1>
@@ -42,33 +56,27 @@ export const Header: React.FC = () => {
           </div>
           
           <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
-            <a 
-              href="#solutions" 
-              className={styles.navLink}
-            >
-              Solutions
-            </a>
-            <a 
-              href="/projects" 
+            <Link 
+              to="/projects" 
               className={styles.navLink}
               onMouseEnter={() => preloadPage('/projects')}
             >
               Projects
-            </a>
-            <a 
-              href="/discovery" 
+            </Link>
+            <Link 
+              to="/discovery" 
               className={styles.navLink}
               onMouseEnter={() => preloadPage('/discovery')}
             >
               Discovery
-            </a>
-            <a 
-              href="/connect" 
+            </Link>
+            <Link 
+              to="/connect" 
               className={styles.navLink}
               onMouseEnter={() => preloadPage('/connect')}
             >
               Connect
-            </a>
+            </Link>
           </nav>
           
           <button 
