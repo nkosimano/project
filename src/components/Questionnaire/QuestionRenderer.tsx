@@ -179,9 +179,6 @@ export const QuestionRenderer: React.FC<QuestionRendererProps> = ({
           )}
         </div>
         <div className={styles.questionContent}>{renderQuestionContent()}</div>
-        {canProceed === false && (
-          <div className={styles.hintBanner}>Please answer this question to continue</div>
-        )}
       </CardBody>
     </Card>
   );
