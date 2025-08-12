@@ -60,6 +60,18 @@
   justify-content: center;
 }
 
+/* Hint banner shown when user must answer to proceed */
+.hintBanner {
+  margin-top: var(--spacing-8);
+  padding: var(--spacing-4) var(--spacing-6);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.08);
+  color: #fbbf24; /* amber-400 */
+  text-align: center;
+  font: var(--typography-body);
+}
+
 /* ==========================================================================
    CHOICE INPUTS
    ========================================================================== */
@@ -199,9 +211,7 @@
    CONTACT FORM
    ========================================================================== */
 
-.contactForm {
-  width: 100%;
-}
+.contactForm { width: 100%; }
 
 .contactGrid {
   display: grid;
@@ -226,14 +236,8 @@
    ========================================================================== */
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ==========================================================================
@@ -241,47 +245,13 @@
    ========================================================================== */
 
 @media (max-width: 767px) {
-  .questionBody {
-    padding: var(--spacing-5);
-  }
-  
-  .choiceGrid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-4);
-  }
-  
-  .choiceButton {
-    min-height: 56px; /* Better touch target */
-    padding: var(--spacing-4) var(--spacing-5);
-    font-size: var(--font-size-base);
-  }
-  
-  .contactGrid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-5);
-  }
-  
-  .scaleContainer {
-    padding: var(--spacing-5);
-  }
-  
-  .textInput,
-  .textarea {
-    font-size: 16px; /* Prevent zoom on iOS */
-    padding: var(--spacing-4) var(--spacing-5);
-  }
-  
-  .slider {
-    height: 12px; /* Larger touch target */
-  }
-  
-  .slider::-webkit-slider-thumb {
-    width: 28px;
-    height: 28px;
-  }
-  
-  .slider::-moz-range-thumb {
-    width: 28px;
-    height: 28px;
-  }
+  .questionBody { padding: var(--spacing-5); }
+  .choiceGrid { grid-template-columns: 1fr; gap: var(--spacing-4); }
+  .choiceButton { min-height: 56px; padding: var(--spacing-4) var(--spacing-5); font-size: var(--font-size-base); }
+  .contactGrid { grid-template-columns: 1fr; gap: var(--spacing-5); }
+  .scaleContainer { padding: var(--spacing-5); }
+  .textInput, .textarea { font-size: 16px; padding: var(--spacing-4) var(--spacing-5); }
+  .slider { height: 12px; }
+  .slider::-webkit-slider-thumb { width: 28px; height: 28px; }
+  .slider::-moz-range-thumb { width: 28px; height: 28px; }
 }

@@ -23,6 +23,8 @@ export const QuestionnairePage: React.FC = () => {
     );
   }
 
+  const canProceed = questionnaire.isCurrentQuestionAnswered();
+
   return (
     <div className={styles.discoveryPage}>
       <div className="container">
@@ -47,13 +49,14 @@ export const QuestionnairePage: React.FC = () => {
               contactInfo={questionnaire.contactInfo}
               onResponseChange={questionnaire.updateResponse}
               onContactInfoChange={questionnaire.updateContactInfo}
+              canProceed={canProceed}
             />
           </div>
 
           <NavigationControls 
             currentIndex={state.currentQuestionIndex}
             totalQuestions={totalQuestions}
-            canProceed={questionnaire.isCurrentQuestionAnswered()}
+            canProceed={canProceed}
             isSubmitting={state.isSubmitting}
             isComplete={state.isComplete}
             onPrevious={questionnaire.previousQuestion}

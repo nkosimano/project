@@ -9,6 +9,7 @@ interface QuestionRendererProps {
   contactInfo: ContactInfo;
   onResponseChange: (questionId: string, answer: string | string[] | number) => void;
   onContactInfoChange: (info: Partial<ContactInfo>) => void;
+  canProceed?: boolean;
 }
 
 export const QuestionRenderer: React.FC<QuestionRendererProps> = ({
@@ -16,7 +17,8 @@ export const QuestionRenderer: React.FC<QuestionRendererProps> = ({
   response,
   contactInfo,
   onResponseChange,
-  onContactInfoChange
+  onContactInfoChange,
+  canProceed
 }) => {
   const renderQuestionContent = () => {
     switch (question.type) {
@@ -176,10 +178,10 @@ export const QuestionRenderer: React.FC<QuestionRendererProps> = ({
             <p className={styles.questionDescription}>{question.description}</p>
           )}
         </div>
-        
-        <div className={styles.questionContent}>
-          {renderQuestionContent()}
-        </div>
+        <div className={styles.questionContent}>{renderQuestionContent()}</div>
+        {canProceed === false && (
+          <div className={styles.hintBanner}>Please answer this question to continue</div>
+        )}
       </CardBody>
     </Card>
   );
