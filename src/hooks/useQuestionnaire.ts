@@ -119,175 +119,66 @@ export const useQuestionnaire = () => {
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>RuleRev - New Discovery Submission</title>
-    <style>
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            line-height: 1.6;
-            color: #f8fafc;
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 30%, #334155 100%);
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, #00f5ff 0%, #1e90ff 50%, #20b2aa 100%);
-            padding: 30px;
-            text-align: center;
-        }
-        .header h1 {
-            margin: 0;
-            color: #1e293b;
-            font-size: 28px;
-            font-weight: 700;
-        }
-        .header p {
-            margin: 10px 0 0 0;
-            color: #334155;
-            font-size: 16px;
-        }
-        .content {
-            padding: 30px;
-        }
-        .contact-info {
-            background: rgba(0, 245, 255, 0.1);
-            border: 1px solid rgba(0, 245, 255, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-        .contact-info h2 {
-            margin: 0 0 15px 0;
-            color: #00f5ff;
-            font-size: 20px;
-        }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-        .contact-item {
-            display: flex;
-            flex-direction: column;
-        }
-        .contact-label {
-            font-size: 12px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 5px;
-        }
-        .contact-value {
-            font-size: 16px;
-            color: #f8fafc;
-            font-weight: 500;
-        }
-        .section {
-            margin-bottom: 40px;
-        }
-        .section-title {
-            color: #00f5ff;
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #00f5ff;
-            display: inline-block;
-        }
-        .question-item {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-left: 4px solid #1e90ff;
-        }
-        .question-title {
-            color: #cbd5e1;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .question-answer {
-            color: #f8fafc;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-        .scale-answer {
-            display: inline-flex;
-            align-items: center;
-            background: linear-gradient(135deg, #00f5ff 0%, #1e90ff 100%);
-            color: #1e293b;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-right: 10px;
-        }
-        .multiple-choice {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .choice-tag {
-            background: rgba(30, 144, 255, 0.2);
-            color: #87ceeb;
-            padding: 6px 12px;
-            border-radius: 16px;
-            font-size: 14px;
-            border: 1px solid rgba(30, 144, 255, 0.3);
-        }
-        .footer {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 20px 30px;
-            text-align: center;
-            color: #94a3b8;
-            font-size: 14px;
-        }
-        .timestamp {
-            color: #64748b;
-            font-size: 12px;
-            margin-top: 10px;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <title>RuleRev - New Discovery Submission</title>
+  <style>
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; line-height: 1.6; color: #0f172a; background: #ffffff; margin: 0; padding: 20px; }
+    .container { max-width: 800px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; }
+    .header { background: linear-gradient(135deg, #00f5ff 0%, #1e90ff 50%, #20b2aa 100%); padding: 24px; display:flex; align-items:center; gap:12px; }
+    .logo { height: 28px; display:block; }
+    .header h1 { margin: 0; color: #0b1220; font-size: 22px; font-weight: 700; }
+    .header p { margin: 6px 0 0 0; color: #0b1220; font-size: 14px; opacity: 0.85; }
+    .content { padding: 24px; }
+    .contact-info { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 16px; margin-bottom: 24px; }
+    .contact-info h2 { margin: 0 0 12px 0; color: #0b1220; font-size: 18px; }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .contact-item { display: flex; flex-direction: column; }
+    .contact-label { font-size: 11px; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .contact-value { font-size: 15px; color: #0f172a; font-weight: 500; }
+    .section { margin-bottom: 28px; }
+    .section-title { color: #0b1220; font-size: 18px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0; display: inline-block; }
+    .question-item { background: #f8fafc; border-radius: 8px; padding: 16px; margin-bottom: 12px; border-left: 4px solid #1e90ff; }
+    .question-title { color: #0b1220; font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .question-answer { color: #0f172a; font-size: 14px; line-height: 1.5; }
+    .scale-answer { display: inline-flex; align-items: center; background: #e0f2fe; color: #0b1220; padding: 6px 12px; border-radius: 20px; font-weight: 600; margin-right: 8px; }
+    .multiple-choice { display: flex; flex-wrap: wrap; gap: 6px; }
+    .choice-tag { background: #e0f2fe; color: #0369a1; padding: 6px 10px; border-radius: 16px; font-size: 13px; border: 1px solid #bae6fd; }
+    .footer { background: #f8fafc; padding: 16px 24px; text-align: center; color: #475569; font-size: 13px; border-top: 1px solid #e2e8f0; }
+    .timestamp { color: #64748b; font-size: 12px; margin-top: 8px; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>RuleRev - New Project Inquiry</h1>
-            <p>Comprehensive Discovery Submission</p>
+  <div class="container">
+    <div class="header">
+      <img class="logo" src="https://rulerev.com/rulerev-logo.svg" alt="RuleRev" />
+      <div>
+        <h1>RuleRev - New Project Inquiry</h1>
+        <p>Comprehensive Discovery Submission</p>
+      </div>
+    </div>
+    <div class="content">
+      <div class="contact-info">
+        <h2>Contact Information</h2>
+        <div class="contact-grid">
+          <div class="contact-item">
+            <div class="contact-label">Name</div>
+            <div class="contact-value">${contactInfo.name}</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">Email</div>
+            <div class="contact-value">${contactInfo.email}</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">Company</div>
+            <div class="contact-value">${contactInfo.company}</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">Phone</div>
+            <div class="contact-value">${contactInfo.phone || 'Not provided'}</div>
+          </div>
         </div>
-        
-        <div class="content">
-            <div class="contact-info">
-                <h2>Contact Information</h2>
-                <div class="contact-grid">
-                    <div class="contact-item">
-                        <div class="contact-label">Name</div>
-                        <div class="contact-value">${contactInfo.name}</div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-label">Email</div>
-                        <div class="contact-value">${contactInfo.email}</div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-label">Company</div>
-                        <div class="contact-value">${contactInfo.company}</div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-label">Phone</div>
-                        <div class="contact-value">${contactInfo.phone || 'Not provided'}</div>
-                    </div>
-                </div>
-            </div>
-    `;
+      </div>
+`;
 
     Object.entries(responsesByCategory).forEach(([category, items]) => {
       if (category === 'Contact Information') return; // Skip contact info as it's already displayed

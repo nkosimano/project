@@ -74,8 +74,9 @@ function buildContactHtml({ name, email, company, phone, message }) {
       body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, Arial, sans-serif; background: #ffffff; color: #0f172a; }
       .container { max-width: 640px; margin: 0 auto; padding: 24px; }
       .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; }
-      .header { background: linear-gradient(135deg, #00f5ff 0%, #1e90ff 50%, #20b2aa 100%); padding: 20px 24px; }
+      .header { background: linear-gradient(135deg, #00f5ff 0%, #1e90ff 50%, #20b2aa 100%); padding: 20px 24px; display:flex; align-items:center; gap:12px; }
       .header h1 { margin:0; color: #0b1220; font-size: 20px; }
+      .logo { height: 28px; display:block; }
       .content { padding: 24px; }
       .info { display: grid; grid-template-columns: 140px 1fr; row-gap: 12px; column-gap: 16px; margin-bottom: 16px; }
       .label { color: #0ea5e9; font-weight: 600; }
@@ -88,7 +89,10 @@ function buildContactHtml({ name, email, company, phone, message }) {
   <body>
     <div class="container">
       <div class="card">
-        <div class="header"><h1>RuleRev - New Contact Form Submission</h1></div>
+        <div class="header">
+          <img class="logo" src="https://rulerev.com/rulerev-logo.svg" alt="RuleRev" />
+          <h1>RuleRev - New Contact Form Submission</h1>
+        </div>
         <div class="content">
           <div class="info">
             <div class="label">Name</div><div class="value">${safe.name}</div>
