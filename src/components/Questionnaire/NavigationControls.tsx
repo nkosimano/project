@@ -78,14 +78,6 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
           )}
         </div>
       </div>
-
-      {!canProceed && (
-        <div className={styles.proceedHint}>
-          <p className={styles.hintText}>
-            Please answer this question to continue
-          </p>
-        </div>
-      )}
     </div>
   );
 };
