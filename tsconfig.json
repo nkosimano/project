@@ -12,8 +12,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": ["vite/client", "@react-three/fiber"]
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src"]
 }
