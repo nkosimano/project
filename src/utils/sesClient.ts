@@ -39,12 +39,15 @@ export interface DiscoveryEmailData {
   emailContent: string;
 }
 
+// Base URL for API. On Netlify set VITE_API_BASE_URL to your server origin.
+const API_BASE: string = import.meta.env.VITE_API_BASE_URL || '';
+
 /**
- * Send contact form email via AWS SES
+ * Send contact form email via backend API
  */
 export const sendContactEmail = async (data: EmailData): Promise<boolean> => {
   try {
-    const response = await fetch('/api/contact', {
+    const response = await fetch(`${API_BASE}/api/contact`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -59,11 +62,11 @@ export const sendContactEmail = async (data: EmailData): Promise<boolean> => {
 };
 
 /**
- * Send discovery form email via AWS SES
+ * Send discovery form email via backend API
  */
 export const sendDiscoveryEmail = async (data: DiscoveryEmailData): Promise<boolean> => {
   try {
-    const response = await fetch('/api/discovery', {
+    const response = await fetch(`${API_BASE}/api/discovery`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
