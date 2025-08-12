@@ -22,6 +22,21 @@ export const QuestionRenderer: React.FC<QuestionRendererProps> = ({
 }) => {
   const renderQuestionContent = () => {
     switch (question.type) {
+      case 'boolean':
+        return (
+          <div className={styles.choiceGrid}>
+            {['yes', 'no'].map(val => (
+              <Button
+                key={val}
+                variant={response === val ? 'accent' : 'glass'}
+                className={styles.choiceButton}
+                onClick={() => onResponseChange(question.id, val)}
+              >
+                {val === 'yes' ? 'Yes' : 'No'}
+              </Button>
+            ))}
+          </div>
+        );
       case 'single-choice':
         return (
           <div className={styles.choiceGrid}>

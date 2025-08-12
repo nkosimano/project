@@ -72,11 +72,10 @@ export const useQuestionnaire = () => {
       };
     });
 
-    // Auto-advance heuristic: single-choice click and scale change advance immediately.
+    // Auto-advance for boolean, single-choice, and scale
     const q = questions.find(q => q.id === questionId);
     if (q) {
-      if (q.type === 'single-choice' || q.type === 'scale') {
-        // Advance shortly after state update to let UI reflect selection
+      if (q.type === 'boolean' || q.type === 'single-choice' || q.type === 'scale') {
         setTimeout(() => nextQuestion(), 120);
       }
     }
@@ -92,18 +91,18 @@ export const useQuestionnaire = () => {
 
   const isCurrentQuestionAnswered = useCallback(() => {
     if (!currentQuestion) return false;
-    
+
     if (currentQuestion.type === 'contact') {
       return Boolean(contactInfo.name && contactInfo.email && contactInfo.company);
     }
-    
+
     const response = getCurrentResponse(currentQuestion.id);
     if (!currentQuestion.required) return true;
-    
+
     if (Array.isArray(response)) {
       return response.length > 0;
     }
-    
+
     return response !== undefined && response !== '' && response !== null;
   }, [currentQuestion, getCurrentResponse, contactInfo]);
 
@@ -112,7 +111,7 @@ export const useQuestionnaire = () => {
       if (!acc[question.category]) {
         acc[question.category] = [];
       }
-      
+
       const response = state.responses.find(r => r.questionId === question.id);
       if (response || question.type === 'contact') {
         acc[question.category].push({
@@ -120,7 +119,7 @@ export const useQuestionnaire = () => {
           response: question.type === 'contact' ? contactInfo : response
         });
       }
-      
+
       return acc;
     }, {} as Record<string, any[]>);
 
@@ -191,17 +190,17 @@ export const useQuestionnaire = () => {
 
     Object.entries(responsesByCategory).forEach(([category, items]) => {
       if (category === 'Contact Information') return; // Skip contact info as it's already displayed
-      
+
       emailContent += `
             <div class="section">
                 <h2 class="section-title">${category}</h2>
       `;
-      
+
       items.forEach(({ question, response }) => {
         if (!response) return;
-        
+
         let answerHtml = '';
-        
+
         if (question.type === 'scale') {
           const scaleValue = response.answer as number;
           answerHtml = `<span class="scale-answer">${scaleValue}/10</span>`;
@@ -222,7 +221,7 @@ export const useQuestionnaire = () => {
         } else {
           answerHtml = `<div class="question-answer">${String(response.answer).replace(/\n/g, '<br>')}</div>`;
         }
-        
+
         emailContent += `
                 <div class="question-item">
                     <div class="question-title">${question.title}</div>
@@ -231,13 +230,13 @@ export const useQuestionnaire = () => {
                 </div>
         `;
       });
-      
+
       emailContent += `</div>`;
     });
 
     emailContent += `
         </div>
-        
+
         <div class="footer">
             <p>This discovery was submitted through the RuleRev website.</p>
             <p>Submission Date: ${new Date().toLocaleString()}</p>
@@ -252,16 +251,16 @@ export const useQuestionnaire = () => {
 
   const submitQuestionnaire = useCallback(async () => {
     setState(prev => ({ ...prev, isSubmitting: true }));
-    
+
     try {
       const emailContent = generateEmailContent();
-      
+
       const success = await sendDiscoveryEmail({
         contactInfo,
         responses: state.responses,
         emailContent
       });
-      
+
       if (success) {
         setState(prev => ({
           ...prev,
@@ -271,7 +270,7 @@ export const useQuestionnaire = () => {
       } else {
         throw new Error('Failed to send discovery email');
       }
-      
+
     } catch (error) {
       console.error('Error submitting discovery:', error);
       setState(prev => ({
