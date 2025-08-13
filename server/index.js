@@ -16,6 +16,11 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+// Simple root responder to avoid confusion when hitting "/"
+app.get('/', (_req, res) => {
+  res.type('text/plain').send('RuleRev API – try GET /api/health');
+});
+
 async function getTransporter() {
   if (process.env.SMTP_HOST) {
     return nodemailer.createTransport({
