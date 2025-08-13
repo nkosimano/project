@@ -6,7 +6,7 @@ import { Hero } from './components/Hero/Hero';
 import { CallToAction } from './components/CallToAction/CallToAction';
 import { Footer } from './components/Footer/Footer';
 import './styles/global.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 // Lazy load page components with better error handling
 const QuestionnairePage = lazy(() => 
@@ -45,9 +45,12 @@ const PageLoader = () => (
 );
 
 function RootLayout({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation();
+  const showWebGL = pathname !== '/discovery';
+
   return (
     <div className="min-h-screen" style={{ paddingTop: '80px' }}>
-      <WebGLBackground />
+      {showWebGL && <WebGLBackground />}
       <Header />
       <Suspense fallback={<PageLoader />}>{children}</Suspense>
       <Footer />

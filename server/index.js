@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import path from 'node:path';
@@ -13,7 +15,21 @@ dotenv.config({ path: path.resolve(__dirname, 'env.local') });
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(cors());
+// Security middleware
+app.use(helmet());
+
+// Configurable CORS (defaults to permissive for local/dev)
+const corsOrigin = process.env.CORS_ORIGIN;
+if (corsOrigin) {
+  app.use(cors({ origin: corsOrigin }));
+} else {
+  app.use(cors());
+}
+
+// Basic rate limiting
+const limiter = rateLimit({ windowMs: 60 * 1000, limit: 120 });
+app.use(limiter);
+
 app.use(express.json());
 
 // Simple root responder to avoid confusion when hitting "/"
@@ -22,6 +38,7 @@ app.get('/', (_req, res) => {
 });
 
 async function getTransporter() {
+  const isProd = String(process.env.NODE_ENV).toLowerCase() === 'production';
   if (process.env.SMTP_HOST) {
     return nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -31,8 +48,8 @@ async function getTransporter() {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       } : undefined,
-      logger: true,
-      debug: true,
+      logger: !isProd,
+      debug: !isProd,
     });
   }
   // Fallback chain for local dev if SMTP not provided
@@ -46,8 +63,8 @@ async function getTransporter() {
         user: testAccount.user,
         pass: testAccount.pass,
       },
-      logger: true,
-      debug: true,
+      logger: !isProd,
+      debug: !isProd,
     });
     return transporter;
   } catch (e) {
@@ -269,6 +286,18 @@ app.post('/api/discovery', async (req, res) => {
 });
 
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ ok: false, error: 'Not Found' });
+});
+
+// Centralized error handler
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((err, _req, res, _next) => {
+  console.error('[Server Error]', err);
+  res.status(500).json({ ok: false, error: 'Internal Server Error' });
+});
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

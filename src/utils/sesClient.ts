@@ -1,20 +1,7 @@
 /**
- * AWS SES Client Configuration
- * Handles email sending through Amazon Simple Email Service
+ * Client-side helpers to call the backend API for sending emails.
+ * All email sending is handled on the server with Nodemailer.
  */
-
-// Deprecated in favor of server-side Nodemailer for contact form
-// Keeping SES utilities for discovery flow if still used elsewhere
-import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
-
-// SES Client Configuration
-const sesClient = new SESClient({
-  region: import.meta.env.VITE_AWS_REGION || 'us-east-1',
-  credentials: {
-    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID || '',
-    secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY || '',
-  },
-});
 
 export interface EmailData {
   name: string;

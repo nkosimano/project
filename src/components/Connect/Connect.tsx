@@ -90,7 +90,7 @@ export const Connect: React.FC = () => {
                   <Mail size={24} className={styles.contactIcon} />
                   <div>
                     <h3 className={styles.contactLabel}>Email</h3>
-                    <p className={styles.contactValue}>hello@rulerev.com</p>
+                    <p className={styles.contactValue}>support@rulerev.com</p>
                   </div>
                 </div>
 
@@ -106,7 +106,7 @@ export const Connect: React.FC = () => {
                   <MapPin size={24} className={styles.contactIcon} />
                   <div>
                     <h3 className={styles.contactLabel}>Location</h3>
-                    <p className={styles.contactValue}>Johannesburg, South Africa</p>
+                    <p className={styles.contactValue}>Fourways, South Africa</p>
                   </div>
                 </div>
               </CardBody>

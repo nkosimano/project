@@ -131,26 +131,31 @@ export const useQuestionnaire = () => {
   <title>RuleRev - New Discovery Submission</title>
   <style>
     body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; line-height: 1.6; color: #0f172a; background: #ffffff; margin: 0; padding: 20px; }
-    .container { max-width: 800px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; }
+    .container { max-width: 1200px; margin: 0 auto; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; }
     .header { background: linear-gradient(135deg, #00f5ff 0%, #1e90ff 50%, #20b2aa 100%); padding: 24px; display:flex; align-items:center; gap:12px; }
     .logo { height: 28px; display:block; }
     .header h1 { margin: 0; color: #0b1220; font-size: 22px; font-weight: 700; }
     .header p { margin: 6px 0 0 0; color: #0b1220; font-size: 14px; opacity: 0.85; }
-    .content { padding: 24px; }
+    .content { padding: 28px; }
     .contact-info { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 16px; margin-bottom: 24px; }
     .contact-info h2 { margin: 0 0 12px 0; color: #0b1220; font-size: 18px; }
-    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
     .contact-item { display: flex; flex-direction: column; }
     .contact-label { font-size: 11px; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
     .contact-value { font-size: 15px; color: #0f172a; font-weight: 500; }
     .section { margin-bottom: 28px; }
     .section-title { color: #0b1220; font-size: 18px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0; display: inline-block; }
-    .question-item { background: #f8fafc; border-radius: 8px; padding: 16px; margin-bottom: 12px; border-left: 4px solid #1e90ff; }
+    .questions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+    .question-item { background: #f8fafc; border-radius: 10px; padding: 16px; border-left: 4px solid #1e90ff; }
+    .question-item.wide { grid-column: span 2; }
     .question-title { color: #0b1220; font-size: 15px; font-weight: 600; margin-bottom: 6px; }
     .question-answer { color: #0f172a; font-size: 14px; line-height: 1.5; }
     .scale-answer { display: inline-flex; align-items: center; background: #e0f2fe; color: #0b1220; padding: 6px 12px; border-radius: 20px; font-weight: 600; margin-right: 8px; }
     .multiple-choice { display: flex; flex-wrap: wrap; gap: 6px; }
     .choice-tag { background: #e0f2fe; color: #0369a1; padding: 6px 10px; border-radius: 16px; font-size: 13px; border: 1px solid #bae6fd; }
+    .boolean-badge { display:inline-block; padding: 6px 10px; border-radius: 14px; font-weight: 600; font-size: 13px; }
+    .boolean-yes { background:#dcfce7; color:#166534; border:1px solid #86efac; }
+    .boolean-no { background:#fee2e2; color:#991b1b; border:1px solid #fecaca; }
     .footer { background: #f8fafc; padding: 16px 24px; text-align: center; color: #475569; font-size: 13px; border-top: 1px solid #e2e8f0; }
     .timestamp { color: #64748b; font-size: 12px; margin-top: 8px; }
   </style>
@@ -194,12 +199,14 @@ export const useQuestionnaire = () => {
       emailContent += `
             <div class="section">
                 <h2 class="section-title">${category}</h2>
+                <div class="questions-grid">
       `;
 
       items.forEach(({ question, response }) => {
         if (!response) return;
 
         let answerHtml = '';
+        let extraClasses = '';
 
         if (question.type === 'scale') {
           const scaleValue = response.answer as number;
@@ -207,6 +214,10 @@ export const useQuestionnaire = () => {
           if (question.scaleLabels) {
             answerHtml += `<span style="color: #94a3b8; font-size: 14px;">(${question.scaleLabels.min} → ${question.scaleLabels.max})</span>`;
           }
+        } else if (question.type === 'boolean') {
+          const v = String(response.answer).toLowerCase();
+          const yes = v === 'true' || v === 'yes' || v === '1';
+          answerHtml = `<span class="boolean-badge ${yes ? 'boolean-yes' : 'boolean-no'}">${yes ? 'Yes' : 'No'}</span>`;
         } else if (question.type === 'multiple-choice') {
           const answers = response.answer as string[];
           answerHtml = `<div class="multiple-choice">`;
@@ -220,10 +231,14 @@ export const useQuestionnaire = () => {
           answerHtml = `<div class="question-answer">${option?.text || response.answer}</div>`;
         } else {
           answerHtml = `<div class="question-answer">${String(response.answer).replace(/\n/g, '<br>')}</div>`;
+          const contentLength = String(response.answer || '').length;
+          if (question.type === 'textarea' || contentLength > 160) {
+            extraClasses = 'wide';
+          }
         }
 
         emailContent += `
-                <div class="question-item">
+                <div class="question-item ${extraClasses}">
                     <div class="question-title">${question.title}</div>
                     ${answerHtml}
                     <div class="timestamp">Answered: ${new Date(response.timestamp).toLocaleString()}</div>
@@ -231,7 +246,9 @@ export const useQuestionnaire = () => {
         `;
       });
 
-      emailContent += `</div>`;
+      emailContent += `
+                </div>
+            </div>`;
     });
 
     emailContent += `

@@ -103,7 +103,7 @@ export const Privacy: React.FC = () => {
                 </p>
                 <div className={styles.contactInfo}>
                   <p><strong>Email:</strong> privacy@rulerev.com</p>
-                  <p><strong>Address:</strong> Johannesburg, South Africa</p>
+                  <p><strong>Address:</strong> Fourways, South Africa</p>
                 </div>
               </section>
             </CardBody>
