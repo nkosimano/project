@@ -169,8 +169,8 @@ app.post('/api/contact', async (req, res) => {
         replyTo: email,
       });
     } catch (sendErr) {
-      console.error('[SMTP] sendMail error (contact). Falling back for dev:', sendErr);
-      if (process.env.NODE_ENV !== 'production') {
+      console.error('[SMTP] sendMail error (contact). Falling back for dev or when ALLOW_EMAIL_FALLBACK=true:', sendErr);
+      if (process.env.NODE_ENV !== 'production' || String(process.env.ALLOW_EMAIL_FALLBACK).toLowerCase() === 'true') {
         const fallback = nodemailer.createTransport({ jsonTransport: true });
         info = await fallback.sendMail({
           from: process.env.MAIL_FROM || 'support@rulerev.com',
@@ -234,8 +234,8 @@ app.post('/api/discovery', async (req, res) => {
         replyTo: contactInfo.email,
       });
     } catch (sendErr) {
-      console.error('[SMTP] sendMail error (discovery). Falling back for dev:', sendErr);
-      if (process.env.NODE_ENV !== 'production') {
+      console.error('[SMTP] sendMail error (discovery). Falling back for dev or when ALLOW_EMAIL_FALLBACK=true:', sendErr);
+      if (process.env.NODE_ENV !== 'production' || String(process.env.ALLOW_EMAIL_FALLBACK).toLowerCase() === 'true') {
         const fallback = nodemailer.createTransport({ jsonTransport: true });
         info = await fallback.sendMail({
           from: process.env.MAIL_FROM || 'support@rulerev.com',
