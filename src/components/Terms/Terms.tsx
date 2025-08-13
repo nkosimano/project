@@ -122,7 +122,7 @@ export const Terms: React.FC = () => {
                   For questions about these terms, please contact us at:
                 </p>
                 <div className={styles.contactInfo}>
-                  <p><strong>Email:</strong> legal@rulerev.com</p>
+                  <p><strong>Email:</strong> support@rulerev.com</p>
                   <p><strong>Address:</strong> Fourways, South Africa</p>
                 </div>
               </section>
