@@ -23,6 +23,9 @@ export const Footer: React.FC = () => {
         <div className={styles.content}>
           <div className={styles.brand}>
             <h3 className={styles.logo}>RuleRev</h3>
+            <p style={{ color: 'var(--color-text-tertiary)', fontSize: 'var(--font-size-xs)', marginTop: 'var(--spacing-2)' }}>
+              Engineering Perpetual Web Applications.
+            </p>
           </div>
           
           <nav className={styles.nav}>

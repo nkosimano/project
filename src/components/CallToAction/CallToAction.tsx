@@ -10,17 +10,17 @@ export const CallToAction: React.FC = () => {
     <section className={styles.section}>
       <div className="container">
         <div className={styles.content}>
-          <h2 className={styles.headline}>Ready to Make an Impact?</h2>
+          <h2 className={styles.headline}>Ready to Build Your Digital Foundation?</h2>
           <p className={styles.description}>
-            Your vision deserves a conversation. Let's find the perfect path forward, together.
+            Let's move beyond a simple launch. I'm here to architect a reliable, perpetual solution that grows with your business. Let's start the conversation about your project's future.
           </p>
           <div className={styles.actions}>
             <Button 
               variant="accent" 
               size="large" 
-              onClick={() => navigate('/connect')}
+              onClick={() => navigate('/discovery')}
             >
-              Contact us
+              Start Your Project Discovery
             </Button>
           </div>
         </div>

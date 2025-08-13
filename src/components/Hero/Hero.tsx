@@ -25,11 +25,11 @@ export const Hero: React.FC = () => {
       <div className="container">
         <div className={styles.content}>
           <h1 className={styles.headline}>
-            Digital Presence, <span className="gradient-text">Perfected</span>.
+            Beyond the Launch. <span className="gradient-text">Built to Last.</span>
           </h1>
           <p className={styles.subtitle}>
-            We craft elegant websites, powerful online stores, and secure business hubs. 
-            Your vision, brought to life with clarity and purpose.
+            As a DevOps Engineer and Solutions Architect, I build web applications with a perpetual lifecycle. 
+            I engineer the reliable, behind-the-scenes architecture that prevents the "build and neglect" cycle, ensuring your digital presence is a long-term asset, not a short-term project.
           </p>
           <div className={styles.cta}>
             <Button 

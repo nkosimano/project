@@ -37,6 +37,30 @@ export const questions: Question[] = [
     ]
   },
   {
+    id: 'long-term-vision',
+    type: 'textarea',
+    category: 'Future-Proofing & Reliability',
+    title: 'Looking 3-5 years ahead, how do you see this platform evolving?',
+    description: 'Consider potential growth in users, features, or traffic. This helps me design an architecture that can scale with your success.',
+    required: false,
+    placeholder: 'e.g., "We plan to expand to new regions," or "We expect user-generated content to become a major feature."'
+  },
+  {
+    id: 'maintenance-concerns',
+    type: 'multiple-choice',
+    category: 'Future-Proofing & Reliability',
+    title: 'What are your biggest concerns about the long-term health of your application?',
+    description: 'Select all that apply. This helps me prioritize the behind-the-scenes safeguards.',
+    required: false,
+    options: [
+      { id: 'security', text: 'Security vulnerabilities', value: 'security' },
+      { id: 'downtime', text: 'Site going down / reliability', value: 'downtime' },
+      { id: 'slow-performance', text: 'Slowing down as we grow', value: 'slow-performance' },
+      { id: 'update-difficulty', text: 'Difficulty adding new features', value: 'update-difficulty' },
+      { id: 'high-costs', text: 'Rising hosting/maintenance costs', value: 'high-costs' }
+    ]
+  },
+  {
     id: 'key-features',
     type: 'multiple-choice',
     category: 'Requirements',

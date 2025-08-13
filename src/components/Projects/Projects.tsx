@@ -10,7 +10,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 const projects: Project[] = [
   {
     title: 'Africa Tennis Platform',
-    description: 'Spearheaded DevOps initiatives for a high-traffic sports platform, focusing on building a scalable, secure, and automated cloud infrastructure. Led comprehensive database architecture refinement and optimization, implementing advanced security measures and performance tuning.',
+    description: 'Engineered for Peak Performance & Uptime. For this high-traffic sports platform, I implemented a robust DevOps strategy using AWS Lambda, Docker, and Kubernetes. My focus was on creating a resilient, auto-scaling cloud architecture that could handle unpredictable traffic spikes with zero downtime. By refining the database and automating the deployment pipeline with GitHub Actions, we achieved 99.95% system uptime and reduced infrastructure costs by 25%—transforming it into a truly perpetual platform.',
     image: 'https://images.unsplash.com/photo-1528410390886-e62811f41bed?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     technologies: ['AWS Lambda', 'Docker', 'Kubernetes', 'GitHub Actions', 'PostgreSQL'],
     outcomes: [
@@ -24,7 +24,7 @@ const projects: Project[] = [
   },
   {
     title: 'Charted Art Platform',
-    description: 'Drove the DevOps strategy for an innovative art analytics platform, emphasizing rapid iteration cycles, robust infrastructure on Google Cloud Platform (GCP), and efficient data processing pipelines for complex analytics.',
+    description: 'Architected for Scalable Analytics. Designed a cloud-native architecture on GCP with Docker and Kubernetes, enabling rapid iteration and reliable data pipelines. Automated CI/CD with Terraform and Azure DevOps to ensure consistent, versioned infrastructure changes and resilient deployments with 99.9% uptime.',
     image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=2400',
     technologies: ['GCP Compute Resources', 'Docker', 'Kubernetes', 'Terraform', 'Azure DevOps', 'API Gateway'],
     outcomes: [
@@ -38,7 +38,7 @@ const projects: Project[] = [
   },
   {
     title: 'Adv. Motsusi Professional Website',
-    description: "Developed a professional website for Adv. Malebogo, a legal consultant. The site enhances online presence and client accessibility, featuring a clean design, user-friendly experience, and SEO optimization, aligning with Adv. Malebogo's testimonial.",
+    description: 'Built for Trust and Maintainability. Implemented a performant, SEO-friendly site with a clean component architecture to simplify updates and ensure long-term reliability for the firm’s digital presence.',
     image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=2000',
     technologies: ['React', 'Tailwind CSS', 'Vite', 'SEO'],
     outcomes: [
@@ -52,7 +52,7 @@ const projects: Project[] = [
   },
   {
     title: 'RTDynamicBC Website',
-    description: 'Developed a modern, professional website for RTDynamicBC, a chartered accountant consultancy firm. The website features a clean design, responsive layout, and intuitive navigation to showcase their services and expertise.',
+    description: 'Architected for Business Continuity. Delivered a responsive, accessible site with a maintainable front-end stack and automated deployments, ensuring consistent uptime and fast edits without regressions.',
     image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2124&q=80',
     technologies: ['HTML', 'CSS', 'Java'],
     outcomes: [
@@ -66,7 +66,7 @@ const projects: Project[] = [
   },
   {
     title: "ReelApps: The Future of Talent Acquisition",
-    description: "ReelApps is a comprehensive, AI-powered ecosystem that transforms talent discovery and showcase. It integrates dynamic candidate profiles (ReelCV), advanced skill verification (ReelSkills), and intelligent recruitment tools (ReelHunter) with personality assessments (ReelPersona) and collaborative project showcases (ReelProjects). Our platform leverages cutting-edge AI and secure, accessible technology to provide personalized experiences, reduce bias, and facilitate authentic talent connections, ensuring skills and real capabilities speak louder than traditional resumes.",
+    description: 'Engineered as a Modular, Perpetual Platform. An AI-powered suite with secure SSO, role-based access, and CI/CD across micro-frontends. Automated testing and GitHub Actions keep releases reliable; infrastructure and state patterns ensure maintainability at scale.',
     image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070",
     technologies: [
       "React",
@@ -90,7 +90,7 @@ const projects: Project[] = [
   },
   {
     title: 'Sensalearn',
-    description: 'Developed an innovative AI-powered language learning platform that leverages cutting-edge artificial intelligence to provide personalized and adaptive learning experiences. The platform features intelligent curriculum adaptation, real-time progress tracking, and interactive learning modules.',
+    description: 'Built for Adaptive Scale. Leveraged AI services with a cloud-native stack and event-driven patterns for resilient workloads, enabling personalized learning while maintaining performance and observability.',
     image: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2124&q=80',
     technologies: ['React', 'TypeScript', 'AI/ML', 'Google Cloud', 'Firebase'],
     outcomes: [
@@ -104,7 +104,7 @@ const projects: Project[] = [
   },
   {
     title: 'IP Navigator',
-    description: 'A platform designed for end-users to assess the patentability of their ideas, providing an actual score based on innovative algorithms. This tool empowers innovators by offering clear insights into the intellectual property landscape.',
+    description: 'Architected for Data Integrity and Insight. Implemented secure APIs and robust data models with PostgreSQL, pairing AI inference with traceability and monitoring to deliver reliable, explainable scoring for innovators.',
     image: 'https://images.unsplash.com/photo-1626908013943-df94de54984c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     technologies: ['React', 'Python (Flask/FastAPI)', 'AI/ML (for patentability scoring)', 'PostgreSQL'],
     outcomes: [
@@ -118,7 +118,7 @@ const projects: Project[] = [
   },
   {
     title: 'THFC Scan Platform',
-    description: 'A robust platform developed to optimize The Health Food Company (THFC) supply chain processes and operations. It facilitates efficient scanning, tracking, and management of inventory, ensuring seamless logistics and improved operational transparency.',
+    description: 'Engineered for Operational Reliability. Designed an end-to-end scanning and tracking system with resilient back-end services, offline-tolerant workflows, and automated deployments to keep logistics running without interruption.',
     image: 'https://images.unsplash.com/photo-1672552226380-486fe900b322?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8d2FyZWhvdXNlfGVufDB8fDB8fHww',
     technologies: ['React', 'Node.js', 'Express.js', 'MongoDB', 'Barcode Scanning APIs'],
     outcomes: [
@@ -132,7 +132,7 @@ const projects: Project[] = [
   },
   {
     title: 'Landulani Physiotherapy Website',
-    description: 'Developed a professional online presence for a physiotherapy practice dedicated to improving quality of mobility through expert, evidence-based care. The site empowers patients through education and showcases the practice\'s services and expertise.',
+    description: 'Built for Performance and Accessibility. Delivered a fast, SEO-optimized site with a maintainable component architecture and CI/CD, ensuring consistent updates with confidence.',
     image: 'https://images.unsplash.com/photo-1622878179314-0b25f2ad50e4?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cGh5c2lvdGhlcmFweSUyMGNsaW5pY3xlbnwwfHwwfHx8MA%3D%3D',
     technologies: ['React', 'Vite', 'Tailwind CSS', 'SEO'],
     outcomes: [

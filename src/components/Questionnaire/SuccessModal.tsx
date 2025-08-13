@@ -32,8 +32,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ onClose }) => {
           
           <div className={styles.content}>
             <p className={styles.message}>
-              Thank you for taking the time to complete our comprehensive discovery process. 
-              Your detailed responses will help us create the perfect digital solution for your needs.
+              Thank you for providing these crucial insights. This information is the first step in architecting a robust and reliable digital solution that is built not just for launch, but for a perpetual lifecycle.
             </p>
             
             <div className={styles.nextSteps}>

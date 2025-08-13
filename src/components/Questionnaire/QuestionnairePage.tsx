@@ -24,7 +24,8 @@ export const QuestionnairePage: React.FC = () => {
   }
 
   const canProceed = questionnaire.isCurrentQuestionAnswered();
-  const isMultiChoice = currentQuestion.type === 'multiple-choice';
+  const autoAdvanceTypes = new Set(['boolean', 'single-choice', 'scale']);
+  const shouldHideNext = autoAdvanceTypes.has(currentQuestion.type);
 
   return (
     <div className={styles.discoveryPage}>
@@ -63,7 +64,7 @@ export const QuestionnairePage: React.FC = () => {
             onPrevious={questionnaire.previousQuestion}
             onNext={questionnaire.nextQuestion}
             onSubmit={questionnaire.submitQuestionnaire}
-            hideNext={!isMultiChoice}
+            hideNext={shouldHideNext}
           />
         </div>
 
