@@ -46,7 +46,7 @@ const PageLoader = () => (
 
 function RootLayout({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
-  const showWebGL = pathname !== '/discovery';
+  const showWebGL = !['/discovery', '/privacy', '/terms'].includes(pathname);
 
   return (
     <div className="min-h-screen" style={{ paddingTop: '80px' }}>
