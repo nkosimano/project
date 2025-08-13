@@ -30,20 +30,26 @@ async function getTransporter() {
       debug: true,
     });
   }
-  // Fallback to Ethereal for local dev if SMTP not provided
-  const testAccount = await nodemailer.createTestAccount();
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    secure: false,
-    auth: {
-      user: testAccount.user,
-      pass: testAccount.pass,
-    },
-    logger: true,
-    debug: true,
-  });
-  return transporter;
+  // Fallback chain for local dev if SMTP not provided
+  try {
+    const testAccount = await nodemailer.createTestAccount();
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+      logger: true,
+      debug: true,
+    });
+    return transporter;
+  } catch (e) {
+    // Final fallback: don't send email, just serialize it for logs
+    console.warn('[SMTP] Ethereal unavailable, falling back to jsonTransport for local dev');
+    return nodemailer.createTransport({ jsonTransport: true });
+  }
 }
 
 function escapeHtml(value) {
@@ -147,14 +153,32 @@ app.post('/api/contact', async (req, res) => {
     }
     const html = buildContactHtml({ name, email, company, phone, message });
     const text = buildContactText({ name, email, company, phone, message });
-    const info = await transporter.sendMail({
-      from: process.env.MAIL_FROM || 'support@rulerev.com',
-      to: 'support@rulerev.com',
-      subject: `RuleRev – New contact from ${name}`,
-      text,
-      html,
-      replyTo: email,
-    });
+    let info;
+    try {
+      info = await transporter.sendMail({
+        from: process.env.MAIL_FROM || 'support@rulerev.com',
+        to: 'support@rulerev.com',
+        subject: `RuleRev – New contact from ${name}`,
+        text,
+        html,
+        replyTo: email,
+      });
+    } catch (sendErr) {
+      console.error('[SMTP] sendMail error (contact). Falling back for dev:', sendErr);
+      if (process.env.NODE_ENV !== 'production') {
+        const fallback = nodemailer.createTransport({ jsonTransport: true });
+        info = await fallback.sendMail({
+          from: process.env.MAIL_FROM || 'support@rulerev.com',
+          to: 'support@rulerev.com',
+          subject: `RuleRev – New contact from ${name}`,
+          text,
+          html,
+          replyTo: email,
+        });
+      } else {
+        throw sendErr;
+      }
+    }
     console.log('[SMTP] sendMail info', {
       messageId: info && info.messageId,
       response: info && info.response,
@@ -194,14 +218,32 @@ app.post('/api/discovery', async (req, res) => {
       `Company: ${contactInfo.company || ''}\nPhone: ${contactInfo.phone || ''}\n\n` +
       `A formatted HTML report is attached in the email body.`;
 
-    const info = await transporter.sendMail({
-      from: process.env.MAIL_FROM || 'support@rulerev.com',
-      to: 'support@rulerev.com',
-      subject: `RuleRev – Discovery from ${contactInfo.name} - ${contactInfo.company || ''}`.trim(),
-      text: plainText,
-      html: emailContent,
-      replyTo: contactInfo.email,
-    });
+    let info;
+    try {
+      info = await transporter.sendMail({
+        from: process.env.MAIL_FROM || 'support@rulerev.com',
+        to: 'support@rulerev.com',
+        subject: `RuleRev – Discovery from ${contactInfo.name} - ${contactInfo.company || ''}`.trim(),
+        text: plainText,
+        html: emailContent,
+        replyTo: contactInfo.email,
+      });
+    } catch (sendErr) {
+      console.error('[SMTP] sendMail error (discovery). Falling back for dev:', sendErr);
+      if (process.env.NODE_ENV !== 'production') {
+        const fallback = nodemailer.createTransport({ jsonTransport: true });
+        info = await fallback.sendMail({
+          from: process.env.MAIL_FROM || 'support@rulerev.com',
+          to: 'support@rulerev.com',
+          subject: `RuleRev – Discovery from ${contactInfo.name} - ${contactInfo.company || ''}`.trim(),
+          text: plainText,
+          html: emailContent,
+          replyTo: contactInfo.email,
+        });
+      } else {
+        throw sendErr;
+      }
+    }
     console.log('[SMTP] sendMail info (discovery)', {
       messageId: info && info.messageId,
       response: info && info.response,

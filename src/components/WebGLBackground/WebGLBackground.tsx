@@ -347,6 +347,28 @@ export const WebGLBackground: React.FC = () => {
       <Canvas
         camera={{ position: [0, 0, 18], fov: 75 }}
         style={{ width: '100%', height: '100%' }}
+        dpr={[1, 1.5]}
+        gl={{ powerPreference: 'low-power', antialias: true }}
+        onCreated={({ gl }) => {
+          try {
+            const ctx = gl.getContext();
+            const canvas = ctx && (ctx.canvas as HTMLCanvasElement);
+            if (!canvas) return;
+            const handleLost = (e: Event) => {
+              e.preventDefault();
+              // Optionally hide canvas or trigger a lightweight UI fallback here
+              // console.warn('WebGL context lost');
+            };
+            const handleRestored = () => {
+              // R3F will re-render on next frame; avoid heavy work here
+              // console.info('WebGL context restored');
+            };
+            canvas.addEventListener('webglcontextlost', handleLost as EventListener, false);
+            canvas.addEventListener('webglcontextrestored', handleRestored as EventListener, false);
+          } catch {
+            // No-op: best-effort guard for environments without expected APIs
+          }
+        }}
       >
         <AnimatedScene />
       </Canvas>
